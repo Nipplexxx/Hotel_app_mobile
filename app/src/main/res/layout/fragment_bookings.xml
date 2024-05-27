@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bookings.BookingsFragment">
+
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etGuestID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Guest ID"
+            android:visibility="visible" />
+
+        <Spinner
+            android:id="@+id/spinnerRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginTop="8dp"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etBookingStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="Booking Start Date"
+            android:minHeight="48dp"
+            android:layout_marginTop="8dp"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etBookingEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="Booking End Date"
+            android:minHeight="48dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/tvTotalPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Price: "
+            android:minHeight="48dp"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnBookRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#133B8B"
+            android:minHeight="48dp"
+            android:text="Book Room" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

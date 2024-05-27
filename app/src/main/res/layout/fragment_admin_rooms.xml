@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.admin_rooms.AdminRoomsFragment">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etRoomType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Room type"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etPricePerNight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Price Per Night"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etNumberOfBeds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Number Of Beds"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Availability"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Description"
+            android:minHeight="48dp" />
+
+        <Button
+            android:id="@+id/btnAddRooms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#133B8B"
+            android:text="Add rooms" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
