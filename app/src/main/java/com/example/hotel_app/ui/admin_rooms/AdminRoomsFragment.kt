@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.hotel_app.databinding.FragmentAdminRoomsBinding
 import com.google.firebase.database.ktx.database
@@ -16,10 +17,9 @@ class AdminRoomsFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentAdminRoomsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -37,26 +37,35 @@ class AdminRoomsFragment : Fragment() {
             val availability = etAvailability.text.toString()
             val description = etDescription.text.toString()
 
-            // проверьте, есть ли у пользователя роль администратора перед добавлением комнаты
-            // если у пользователя есть роль администратора, добавьте место в базу данных Firebase Realtime
-            val database = Firebase.database
-            val roomsRef = database.getReference("Rooms")
-            val room = hashMapOf(
-                "roomType" to roomType,
-                "pricePerNight" to pricePerNight,
-                "numberOfBeds" to numberOfBeds,
-                "availability" to availability,
-                "description" to description
-            )
-            roomsRef.push().setValue(room)
+            if (isAdded) { // проверяем, прикреплен ли фрагмент
+                val database = Firebase.database
+                val roomsRef = database.getReference("Rooms")
+                val room = hashMapOf(
+                    "roomType" to roomType,
+                    "pricePerNight" to pricePerNight,
+                    "numberOfBeds" to numberOfBeds,
+                    "availability" to availability,
+                    "description" to description
+                )
 
-            // Очищает поля редактируемого текста после добавления комнаты
-            etRoomType.text.clear()
-            etPricePerNight.text.clear()
-            etNumberOfBeds.text.clear()
-            etAvailability.text.clear()
-            etDescription.text.clear()
-            // Действие об успешной операции
+                roomsRef.push().setValue(room).addOnSuccessListener {
+                    // Сообщение об успешном добавлении
+                    Toast.makeText(context, "Номер добавлен!", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    // Сообщение об ошибке
+                    Toast.makeText(context, "Ошибка при добавлении номера!", Toast.LENGTH_SHORT).show()
+                }
+
+                // Очищает поля
+                etRoomType.text.clear()
+                etPricePerNight.text.clear()
+                etNumberOfBeds.text.clear()
+                etAvailability.text.clear()
+                etDescription.text.clear()
+            } else {
+                // Если фрагмент не привязан
+                Toast.makeText(context, "Ошибка: фрагмент не привязан к контексту.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return root

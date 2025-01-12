@@ -49,15 +49,18 @@ class InputActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var userExists = false
                     var userRole: String? = null
+                    var userId: String? = null
 
                     for (userSnapshot in snapshot.children) {
                         val userEmail = userSnapshot.child("email").getValue(String::class.java)
                         val userPassword = userSnapshot.child("password").getValue(String::class.java)
                         val role = userSnapshot.child("role").getValue(String::class.java)
+                        val id = userSnapshot.key // Получаем ID пользователя из Firebase
 
                         if (userEmail == email && userPassword == password) {
                             userExists = true
                             userRole = role
+                            userId = id
                             break
                         }
                     }
@@ -65,7 +68,8 @@ class InputActivity : AppCompatActivity() {
                     if (userExists) {
                         val intent = Intent(this@InputActivity, MainActivity::class.java)
                         intent.putExtra("userRole", userRole)
-                        intent.putExtra("userEmail", email) // Добавляем почту пользователя в Intent
+                        intent.putExtra("userEmail", email) // Передаем почту
+                        intent.putExtra("userId", userId) // Передаем ID пользователя
                         startActivity(intent)
                         finish()
                     } else {

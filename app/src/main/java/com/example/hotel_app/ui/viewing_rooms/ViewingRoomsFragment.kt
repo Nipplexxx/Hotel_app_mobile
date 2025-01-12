@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hotel_app.R
 import com.example.hotel_app.databinding.FragmentViewingRoomsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,7 +25,6 @@ class ViewingRoomsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Удален вызов ViewModelProvider
         _binding = FragmentViewingRoomsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -41,7 +42,7 @@ class ViewingRoomsFragment : Fragment() {
 
         roomsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                roomList.clear()
+                roomList.clear()  // Очищаем список перед обновлением
                 for (roomSnapshot in snapshot.children) {
                     val roomType = roomSnapshot.child("roomType").getValue(String::class.java) ?: ""
                     val pricePerNight = roomSnapshot.child("pricePerNight").getValue(String::class.java) ?: ""
@@ -49,14 +50,17 @@ class ViewingRoomsFragment : Fragment() {
                     val availability = roomSnapshot.child("availability").getValue(String::class.java) ?: ""
                     val description = roomSnapshot.child("description").getValue(String::class.java) ?: ""
 
-                    if (availability.lowercase() in listOf("свободная", "свободна", "freedom")) {
+                    // Проверяем, что комната доступна
+                    if (availability.lowercase() in listOf("свободная", "свободна", "Свободный", "freedom")) {
                         roomList.add(RoomModel(roomType, pricePerNight, numberOfBeds, availability, description))
                     }
                 }
-                adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()  // Обновляем адаптер, чтобы отобразить новые данные
             }
 
-            override fun onCancelled(error: DatabaseError) {}
+            override fun onCancelled(error: DatabaseError) {
+                // Обработать ошибку, если необходимо
+            }
         })
 
         return root
