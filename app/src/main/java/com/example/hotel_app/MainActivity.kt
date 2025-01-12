@@ -2,6 +2,7 @@ package com.example.hotel_app
 
 import android.os.Bundle
 import android.view.Menu
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -23,28 +24,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Получаем почту пользователя из Intent
-        val userEmail = intent.getStringExtra("userEmail")
+        // Получаем данные пользователя из Intent
+        val userEmail = intent.getStringExtra("userEmail") ?: "Гость"
+        val userId = intent.getStringExtra("userId") ?: "Неизвестно"
 
-        // Передаем почту пользователя в BookingsFragment
-        val bookingsFragment = BookingsFragment()
-        val bundle = Bundle()
-        bundle.putString("userEmail", userEmail)
-        bookingsFragment.arguments = bundle
-        setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
-        // Извлекать пользовательские данные из Intent extras
-        intent.getStringExtra("userId")
-        intent.getStringExtra("login")
-        intent.getStringExtra("password")
-        intent.getStringExtra("role")
+        // Обновляем TextView в заголовке меню
+        val headerView = navView.getHeaderView(0)
+        val tvUserEmail = headerView.findViewById<TextView>(R.id.tvUserEmail)
+        val tvUserId = headerView.findViewById<TextView>(R.id.tvUserId)
 
-        // Передача каждого идентификатора меню в виде набора идентификаторов
-        // меню следует рассматривать как пункты назначения высшего уровня.
+        tvUserEmail.text = "Email: $userEmail" // Устанавливаем почту
+        tvUserId.text = "ID: $userId" // Устанавливаем ID пользователя
+
+        // Настройка верхнего уровня навигации
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
@@ -55,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Расширьте меню; это добавит элементы на панель действий, если она присутствует.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
