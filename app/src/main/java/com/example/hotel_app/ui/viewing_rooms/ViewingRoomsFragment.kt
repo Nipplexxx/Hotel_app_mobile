@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hotel_app.databinding.FragmentViewingRoomsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,40 +23,40 @@ class ViewingRoomsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        ViewModelProvider(this).get(ViewingRoomsViewModel::class.java)
+        // Удален вызов ViewModelProvider
         _binding = FragmentViewingRoomsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Доступ к базе данных Firebase в реальном времени
+        // Настройка RecyclerView
+        val recyclerView: RecyclerView = binding.recyclerViewRooms
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        // Настройка базы данных Firebase
         val database = Firebase.database
         val roomsRef = database.getReference("Rooms")
+        val roomList = mutableListOf<RoomModel>()
+
+        val adapter = RoomAdapter(roomList)
+        recyclerView.adapter = adapter
 
         roomsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val roomList = StringBuilder()
+                roomList.clear()
                 for (roomSnapshot in snapshot.children) {
                     val roomType = roomSnapshot.child("roomType").getValue(String::class.java) ?: ""
                     val pricePerNight = roomSnapshot.child("pricePerNight").getValue(String::class.java) ?: ""
                     val numberOfBeds = roomSnapshot.child("numberOfBeds").getValue(String::class.java) ?: ""
                     val availability = roomSnapshot.child("availability").getValue(String::class.java) ?: ""
                     val description = roomSnapshot.child("description").getValue(String::class.java) ?: ""
-                    if (availability == "свободная" || availability == "Свободна" || availability == "freedom" || availability == "Freedom") {
-                        roomList.append("Room Type: $roomType\n")
-                        roomList.append("Price Per Night: $pricePerNight\n")
-                        roomList.append("Number of Beds: $numberOfBeds\n")
-                        roomList.append("Availability: $availability\n")
-                        roomList.append("Description: $description\n\n")
+
+                    if (availability.lowercase() in listOf("свободная", "свободна", "freedom")) {
+                        roomList.add(RoomModel(roomType, pricePerNight, numberOfBeds, availability, description))
                     }
                 }
-
-                // Отображение сведений о комнате в текстовом виде
-                val roomDetailsTextView: TextView = binding.textViewRoomDetails
-                roomDetailsTextView.text = roomList.toString()
+                adapter.notifyDataSetChanged()
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Устранять любые ошибки, возникающие при извлечении данных
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
 
         return root
