@@ -6,15 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hotel_app.R
-
-data class RoomModel(
-    val roomType: String,
-    val pricePerNight: String,
-    val numberOfBeds: String,
-    val availability: String,
-    val description: String
-)
-
 class RoomAdapter(private val roomList: List<RoomModel>) :
     RecyclerView.Adapter<RoomAdapter.RoomViewHolder>() {
 
@@ -37,8 +28,13 @@ class RoomAdapter(private val roomList: List<RoomModel>) :
         holder.roomTypeText.text = room.roomType
         holder.priceText.text = "Price: ${room.pricePerNight}"
         holder.bedsText.text = "Beds: ${room.numberOfBeds}"
-        holder.availabilityText.text = "Status: ${room.availability}"
         holder.descriptionText.text = room.description
+
+        if (room.isAvailable) {
+            holder.availabilityText.text = "Status: Available"
+        } else {
+            holder.availabilityText.text = "Status: Booked (${room.bookingDates})"
+        }
     }
 
     override fun getItemCount() = roomList.size

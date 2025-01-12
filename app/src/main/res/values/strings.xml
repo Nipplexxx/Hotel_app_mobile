@@ -31,4 +31,6 @@
     <string name="pasport_txt">Паспортные данные</string>
     <string name="phone_txt">Контактный телефон</string>
     <string name="back_txt">Назад</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

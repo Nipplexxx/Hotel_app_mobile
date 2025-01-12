@@ -113,20 +113,58 @@ class BookingsFragment : Fragment() {
             val roomId = spinnerRoom.selectedItem.toString()
             val bookingStartDate = etBookingStartDate.text.toString()
             val bookingEndDate = etBookingEndDate.text.toString()
-            val totalPrice = calculateTotalPrice(bookingStartDate, bookingEndDate, roomPrices[roomId] ?: 0.0)
-            val isPaid = false
-            val bookingsRef = database.getReference("Bookings")
-            val bookingId = bookingsRef.push().key
-            val newBooking = Booking(guestId, roomId, bookingStartDate, bookingEndDate, totalPrice, isPaid)
-            bookingId?.let {
-                bookingsRef.child(it).setValue(newBooking)
+
+            if (bookingStartDate.isEmpty() || bookingEndDate.isEmpty()) {
+                Toast.makeText(requireContext(), "Please select both start and end dates.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            Toast.makeText(requireContext(), "Booking successful!", Toast.LENGTH_SHORT).show()
+            val totalPrice = calculateTotalPrice(bookingStartDate, bookingEndDate, roomPrices[roomId] ?: 0.0)
+            val bookingsRef = database.getReference("Bookings")
 
-            findNavController().navigate(R.id.nav_home)
+            // Проверка на пересечение дат
+            bookingsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val selectedStartDate = sdf.parse(bookingStartDate) ?: return
+                    val selectedEndDate = sdf.parse(bookingEndDate) ?: return
+
+                    for (bookingSnapshot in snapshot.children) {
+                        val existingRoomId = bookingSnapshot.child("roomId").getValue(String::class.java)
+                        val existingStartDateStr = bookingSnapshot.child("bookingStartDate").getValue(String::class.java)
+                        val existingEndDateStr = bookingSnapshot.child("bookingEndDate").getValue(String::class.java)
+
+                        if (existingRoomId == roomId && existingStartDateStr != null && existingEndDateStr != null) {
+                            val existingStartDate = sdf.parse(existingStartDateStr)
+                            val existingEndDate = sdf.parse(existingEndDateStr)
+
+                            // Проверяем, пересекаются ли даты
+                            if (selectedStartDate <= existingEndDate && selectedEndDate >= existingStartDate) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "This room is already booked for the selected dates.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return
+                            }
+                        }
+                    }
+
+                    // Если пересечений нет, создаем бронирование
+                    val bookingId = bookingsRef.push().key
+                    val newBooking = Booking(guestId, roomId, bookingStartDate, bookingEndDate, totalPrice, false)
+                    bookingId?.let {
+                        bookingsRef.child(it).setValue(newBooking)
+                        Toast.makeText(requireContext(), "Booking successful!", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.nav_home)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(), "Error checking bookings.", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
-
         return root
     }
 
