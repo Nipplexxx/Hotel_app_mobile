@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -16,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.hotel_app.R
 import com.example.hotel_app.databinding.FragmentBookingsBinding
-import com.example.hotel_app.ui.viewing_rooms.ViewingRoomsFragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -52,9 +50,15 @@ class BookingsFragment : Fragment() {
     ): View {
         _binding = FragmentBookingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val etGuestID: EditText = binding.etGuestID
-        val userEmail = arguments?.getString("userEmail")
-        etGuestID.setText(userEmail)
+
+        // Получаем данные пользователя из arguments
+        val userId = arguments?.getString("userId") ?: "Неизвестно"
+        val userEmail = arguments?.getString("userEmail") ?: "Гость"
+
+        // Устанавливаем ID и Email пользователя в UI
+        val etGuestID: TextView = binding.etGuestID
+        etGuestID.text = userId
+
         val spinnerRoom: Spinner = binding.spinnerRoom
         etBookingStartDate = binding.etBookingStartDate
         etBookingEndDate = binding.etBookingEndDate
@@ -89,15 +93,11 @@ class BookingsFragment : Fragment() {
                         }
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        // Обрабатывать ничего не выбранное
-                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Устранять любые ошибки, возникающие при извлечении данных
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
 
         etBookingStartDate.setOnClickListener {
@@ -122,11 +122,9 @@ class BookingsFragment : Fragment() {
                 bookingsRef.child(it).setValue(newBooking)
             }
 
-            // отобразить сообщение об успешном завершении
             Toast.makeText(requireContext(), "Booking successful!", Toast.LENGTH_SHORT).show()
 
-            // Перейдите к фрагменту просмотра комнат с помощью NavController
-            findNavController().navigate(com.google.android.material.R.id.navigation_header_container)
+            findNavController().navigate(R.id.nav_home)
         }
 
         return root

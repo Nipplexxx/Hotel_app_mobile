@@ -66,10 +66,17 @@ class InputActivity : AppCompatActivity() {
                     }
 
                     if (userExists) {
+                        // Сохраняем данные пользователя в SharedPreferences
+                        val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("userEmail", email)
+                        editor.putString("userId", userId)
+                        editor.apply()
+
                         val intent = Intent(this@InputActivity, MainActivity::class.java)
                         intent.putExtra("userRole", userRole)
-                        intent.putExtra("userEmail", email) // Передаем почту
-                        intent.putExtra("userId", userId) // Передаем ID пользователя
+                        intent.putExtra("userEmail", email)
+                        intent.putExtra("userId", userId) // передаем ID
                         startActivity(intent)
                         finish()
                     } else {

@@ -45,11 +45,17 @@
             android:hint="Идентификатор гостя"
             android:layout_marginBottom="8dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <!-- Используем TextView, чтобы ID был только для чтения -->
+            <TextView
                 android:id="@+id/etGuestID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp" />
+                android:backgroundTint="@color/white"
+                android:clickable="false"
+                android:focusable="false"
+                android:minHeight="28dp"
+                android:text=""
+                android:textColor="@color/primaryColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Выпадающий список для выбора номера -->
