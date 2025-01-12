@@ -40,7 +40,7 @@ class ViewingRoomsFragment : Fragment() {
                     val numberOfBeds = roomSnapshot.child("numberOfBeds").getValue(String::class.java) ?: ""
                     val availability = roomSnapshot.child("availability").getValue(String::class.java) ?: ""
                     val description = roomSnapshot.child("description").getValue(String::class.java) ?: ""
-                    if (availability == "freedom") {
+                    if (availability == "свободная" || availability == "Свободна" || availability == "freedom" || availability == "Freedom") {
                         roomList.append("Room Type: $roomType\n")
                         roomList.append("Price Per Night: $pricePerNight\n")
                         roomList.append("Number of Beds: $numberOfBeds\n")

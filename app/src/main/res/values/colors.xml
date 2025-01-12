@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- New collar -->
+    <color name="background_color">#F5F5F5</color>
+    <color name="primaryColor">#3F51B5</color>
+    <color name="secondaryColor">#FFC107</color>
 </resources>

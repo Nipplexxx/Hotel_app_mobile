@@ -13,6 +13,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.hotel_app.R
 import com.example.hotel_app.databinding.FragmentBookingsBinding
 import com.example.hotel_app.ui.viewing_rooms.ViewingRoomsFragment
@@ -124,12 +125,8 @@ class BookingsFragment : Fragment() {
             // отобразить сообщение об успешном завершении
             Toast.makeText(requireContext(), "Booking successful!", Toast.LENGTH_SHORT).show()
 
-            // Перейдите к фрагменту просмотра комнат
-            val fragmentManager = parentFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, ViewingRoomsFragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
+            // Перейдите к фрагменту просмотра комнат с помощью NavController
+            findNavController().navigate(com.google.android.material.R.id.navigation_header_container)
         }
 
         return root
@@ -141,12 +138,17 @@ class BookingsFragment : Fragment() {
     }
 
     private fun calculateTotalPrice(startDate: String, endDate: String, pricePerNight: Double): Double {
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-        val date1: Date = sdf.parse(startDate)
-        val date2: Date = sdf.parse(endDate)
-        val diffInMillies = date2.time - date1.time
-        val diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS).toInt()
-        return pricePerNight * diffInDays
+        try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+            val date1: Date = sdf.parse(startDate)
+            val date2: Date = sdf.parse(endDate)
+            val diffInMillies = date2.time - date1.time
+            val diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS).toInt()
+            return pricePerNight * diffInDays
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return 0.0
+        }
     }
 
     private fun showDatePickerDialog(textInputEditText: TextInputEditText) {

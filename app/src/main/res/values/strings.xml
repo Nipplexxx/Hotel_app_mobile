@@ -19,4 +19,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="email_txt">Электронная почта</string>
+    <string name="password_txt">Пароль</string>
+    <string name="input_txt">Войти</string>
+    <string name="regestration_txt">Зарегистрироваться</string>
+    <string name="regest_txt">Регистрация</string>
+    <string name="logo_desc">logoDesk</string>
+    <string name="name_txt">Имя</string>
+    <string name="surname_txt">Фамилия</string>
+    <string name="birthday_txt">Дата рождения</string>
+    <string name="pasport_txt">Паспортные данные</string>
+    <string name="phone_txt">Контактный телефон</string>
+    <string name="back_txt">Назад</string>
 </resources>

@@ -1,52 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".ui.input.InputActivity">
 
+    <!-- Логотип -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/logo_desc"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp" />
+
+    <!-- Контейнер для формы -->
     <LinearLayout
+        android:id="@+id/formContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_form"
+        android:elevation="4dp"
         android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintVertical_bias="0.258">
 
-        <EditText
-            android:id="@+id/etEmail"
+        <!-- Поле для ввода email -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_marginTop="8dp"
-            android:inputType="textEmailAddress"/>
+            android:layout_marginBottom="8dp"
+            android:hint="@string/email_txt">
 
-        <EditText
-            android:id="@+id/etPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Поле для ввода пароля -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:layout_marginTop="8dp"
-            android:inputType="textPassword"/>
+            android:layout_marginBottom="16dp"
+            android:hint="@string/password_txt">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Кнопка входа -->
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#133B8B"
-            android:layout_marginTop="8dp"
-            android:text="Войти" />
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_button"
+            android:backgroundTint="@color/primaryColor"
+            android:elevation="4dp"
+            android:text="@string/input_txt"
+            android:textColor="@color/white" />
 
+        <!-- Кнопка регистрации -->
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#133B8B"
-            android:layout_marginTop="8dp"
-            android:text="Зарегистрироваться" />
+            android:background="@drawable/bg_button"
+            android:backgroundTint="@color/secondaryColor"
+            android:elevation="4dp"
+            android:text="@string/regestration_txt"
+            android:textColor="@color/white" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

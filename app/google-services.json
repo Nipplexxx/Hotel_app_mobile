@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "861543923149",
-    "firebase_url": "https://hotel-6b996-default-rtdb.firebaseio.com",
-    "project_id": "hotel-6b996",
-    "storage_bucket": "hotel-6b996.appspot.com"
+    "project_number": "47019117274",
+    "project_id": "apphotel-ea761",
+    "storage_bucket": "apphotel-ea761.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:861543923149:android:497db13dfb827bcd66d884",
+        "mobilesdk_app_id": "1:47019117274:android:688907a4488e11d5def3e3",
         "android_client_info": {
           "package_name": "com.example.hotel_app"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCP3jLev1wnY9x21UugDqAZM0zcSDIeoaM"
+          "current_key": "AIzaSyAti0U7YF2IyxEffgl7IeFJmLO28PF4pVY"
         }
       ],
       "services": {

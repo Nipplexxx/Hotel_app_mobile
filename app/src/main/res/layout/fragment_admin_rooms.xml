@@ -4,63 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".ui.admin_rooms.AdminRoomsFragment">
 
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Добавить номера"
+        android:textSize="24sp"
+        android:textColor="@color/primaryColor"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
+
+    <!-- Контейнер для формы -->
     <LinearLayout
+        android:id="@+id/formContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        android:background="@drawable/bg_form"
+        android:elevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp">
 
-        <EditText
-            android:id="@+id/etRoomType"
+        <!-- Поле "Тип номера" -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Room type"
-            android:minHeight="48dp" />
+            android:hint="Тип номера"
+            android:layout_marginBottom="8dp">
 
-        <EditText
-            android:id="@+id/etPricePerNight"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRoomType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Поле "Цена за ночь" -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Price Per Night"
-            android:minHeight="48dp" />
+            android:hint="Цена за ночь"
+            android:layout_marginBottom="8dp">
 
-        <EditText
-            android:id="@+id/etNumberOfBeds"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPricePerNight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Поле "Количество спальных мест" -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Number Of Beds"
-            android:minHeight="48dp" />
+            android:hint="Количество спальных мест"
+            android:layout_marginBottom="8dp">
 
-        <EditText
-            android:id="@+id/etAvailability"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNumberOfBeds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Поле "Доступность" -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Availability"
-            android:minHeight="48dp" />
+            android:hint="Доступность"
+            android:layout_marginBottom="8dp">
 
-        <EditText
-            android:id="@+id/etDescription"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Поле "Описание" -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Description"
-            android:minHeight="48dp" />
+            android:hint="Описание"
+            android:layout_marginBottom="16dp">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Кнопка "Добавить номера" -->
         <Button
             android:id="@+id/btnAddRooms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:backgroundTint="#133B8B"
-            android:text="Add rooms" />
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:text="Добавить номер"
+            android:textStyle="bold"
+            android:elevation="4dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
